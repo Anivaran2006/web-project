@@ -5,167 +5,334 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wedding Invitation</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Poppins&display=swap" rel="stylesheet">
 
 <style>
+
+/* ===== BASE ===== */
 body{
 margin:0;
 font-family:'Poppins',sans-serif;
-background: linear-gradient(to bottom,#5a0f1b,#8b1e2d);
 color:white;
 overflow-x:hidden;
+
+/* premium background */
+background:
+radial-gradient(circle at 20% 30%, rgba(255,215,0,0.1), transparent 40%),
+radial-gradient(circle at 80% 70%, rgba(255,140,0,0.08), transparent 40%),
+linear-gradient(135deg,#0f0f0f,#2b0a0a);
 }
 
-/* Sections */
+/* moving glow */
+body::after{
+content:"";
+position:fixed;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle at 50% 50%, rgba(255,215,0,0.05), transparent 60%);
+animation:moveGlow 8s infinite alternate;
+pointer-events:none;
+}
+
+@keyframes moveGlow{
+0%{transform:translate(0,0);}
+100%{transform:translate(40px,-30px);}
+}
+
+/* ===== SECTIONS ===== */
 .section{
-height:100vh;
+display:none;
+min-height:100vh;
+padding:40px 20px;
+text-align:center;
+opacity:0;
+transform:translateY(20px);
+transition:all 0.6s ease;
+}
+
+.section.active{
 display:flex;
-flex-direction:column;
 justify-content:center;
 align-items:center;
-text-align:center;
+flex-direction:column;
+opacity:1;
+transform:translateY(0);
+}
+
+/* ===== SPLIT ===== */
+.split{
+display:flex;
+height:100vh;
+padding:0;
+}
+
+.left-img{
+flex:1;
+background:url("https://images.unsplash.com/photo-1519741497674-611481863552") center/cover no-repeat;
+position:relative;
+animation:zoomIn 1.5s ease;
+}
+
+@keyframes zoomIn{
+from{transform:scale(1.1);}
+to{transform:scale(1);}
+}
+
+.left-img::after{
+content:"";
+position:absolute;
+inset:0;
+background:rgba(0,0,0,0.35);
+}
+
+.right-content{
+flex:1;
+display:flex;
+justify-content:center;
+align-items:center;
 padding:20px;
 }
 
-/* Hide all except first */
-.section:not(#screen1){
-display:none;
+/* ===== CARD ===== */
+.card{
+background:rgba(255,255,255,0.05);
+padding:30px;
+border-radius:20px;
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,215,0,0.3);
+box-shadow:0 15px 40px rgba(0,0,0,0.6);
+max-width:350px;
+width:100%;
+transition:0.4s;
 }
 
-/* Button */
-button{
-padding:12px 25px;
-border:none;
-background:gold;
-color:#5a0f1b;
-font-weight:bold;
-border-radius:30px;
-cursor:pointer;
-margin-top:20px;
+.card:hover{
+transform:translateY(-5px);
 }
 
-/* Headings */
+/* divider */
+.divider{
+width:60px;
+height:3px;
+background:linear-gradient(to right,transparent,gold,transparent);
+margin:15px auto;
+}
+
+/* ===== TEXT ===== */
 h1{
-font-family:'Great Vibes',cursive;
-font-size:50px;
-margin:10px 0;
+font-family:'Playfair Display',serif;
+font-size:clamp(30px,5vw,40px);
+color:#ffd700;
+}
+
+.names{
+font-size:clamp(28px,5vw,38px);
+text-shadow:0 0 10px rgba(255,215,0,0.3);
 }
 
 h2{
-font-size:30px;
-margin-bottom:10px;
+font-size:18px;
+opacity:0.85;
 }
 
-.card{
-background:rgba(255,255,255,0.1);
-padding:20px;
-border-radius:20px;
-backdrop-filter:blur(10px);
+/* ===== BUTTON ===== */
+button{
+padding:10px 25px;
+border:none;
+border-radius:25px;
+background:#ffd700;
+color:black;
+cursor:pointer;
+margin-top:20px;
+font-weight:bold;
+position:relative;
+overflow:hidden;
 }
 
-/* RSVP */
-input, select{
+/* ripple */
+button::after{
+content:"";
+position:absolute;
+width:0;
+height:0;
+background:rgba(255,255,255,0.4);
+border-radius:50%;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+transition:0.4s;
+}
+
+button:active::after{
+width:200px;
+height:200px;
+}
+
+/* ===== GALLERY ===== */
+.gallery{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin-top:15px;
+}
+
+.gallery img{
+width:100%;
+height:100px;
+object-fit:cover;
+border-radius:10px;
+transition:0.4s;
+}
+
+.gallery img:hover{
+transform:scale(1.1);
+}
+
+/* ===== INPUT ===== */
+input,select{
 padding:10px;
 margin:10px;
 border-radius:10px;
 border:none;
+width:80%;
+max-width:250px;
 }
 
-/* Flower animation */
-.flower{
-position:fixed;
-top:-10px;
-font-size:20px;
-animation:fall linear infinite;
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+.split{
+flex-direction:column;
 }
 
-@keyframes fall{
-0%{transform:translateY(-10px);}
-100%{transform:translateY(100vh);}
+.left-img{
+height:40vh;
 }
+
+.right-content{
+height:60vh;
+}
+
+.gallery{
+grid-template-columns:repeat(2,1fr);
+}
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- Screen 1 -->
-<div id="screen1" class="section">
+<!-- SCREEN 1 -->
+<div id="s1" class="section active">
+<div class="card">
 <h1>Wedding Invitation</h1>
+<div class="divider"></div>
 <p>You are invited to celebrate</p>
-<button onclick="nextScreen('screen2')">Open Invitation</button>
+<button onclick="next(2)">Open</button>
+</div>
 </div>
 
-<!-- Screen 2 -->
-<div id="screen2" class="section">
+<!-- SCREEN 2 -->
+<div id="s2" class="section split">
+
+<div class="left-img"></div>
+
+<div class="right-content">
 <div class="card">
-<h1>Anivaran ❤️ Priya</h1>
-<h2>Wedding Ceremony</h2>
-<p>📅 20 December 2026</p>
-<p>⏰ 7:00 PM onwards</p>
-<p>📍 Grand Palace, Delhi</p>
-
-<button onclick="openMap()">View Location</button>
-<br>
-<button onclick="nextScreen('screen3')">Next</button>
+<h1 class="names">Anivaran ❤️ Priya</h1>
+<div class="divider"></div>
+<h2>20 December 2026</h2>
+<p>Grand Palace, Delhi</p>
+<button onclick="next(3)">Next</button>
 </div>
 </div>
 
-<!-- Screen 3 -->
-<div id="screen3" class="section">
+</div>
+
+<!-- SCREEN 3 -->
+<div id="s3" class="section">
 <div class="card">
-<h2>Functions & Ceremonies</h2>
-<p>💛 Haldi - 18 Dec</p>
-<p>🎉 Sangeet - 19 Dec</p>
-<p>🔥 Wedding - 20 Dec</p>
-<p>🍽 Reception - 21 Dec</p>
-
-<button onclick="nextScreen('screen4')">Next</button>
+<h2>Functions</h2>
+<div class="divider"></div>
+<p>Haldi • 18 Dec</p>
+<p>Sangeet • 19 Dec</p>
+<p>Wedding • 20 Dec</p>
+<button onclick="next(4)">Next</button>
 </div>
 </div>
 
-<!-- Screen 4 -->
-<div id="screen4" class="section">
+<!-- SCREEN 4 -->
+<div id="s4" class="section">
+<div class="card">
+<h2>Our Moments 💍</h2>
+<div class="divider"></div>
+
+<div class="gallery">
+<img src="https://images.unsplash.com/photo-1529634899881-1f7c6c3a3b7a">
+<img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9">
+<img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc">
+<img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c">
+<img src="https://images.unsplash.com/photo-1517841905240-472988babdf9">
+<img src="https://images.unsplash.com/photo-1519741497674-611481863552">
+</div>
+
+<button onclick="next(5)">Next</button>
+</div>
+</div>
+
+<!-- SCREEN 5 -->
+<div id="s5" class="section">
 <div class="card">
 <h2>RSVP</h2>
-<input type="text" placeholder="Your Name"><br>
+<div class="divider"></div>
+
+<input placeholder="Your Name">
 <select>
 <option>Will you attend?</option>
 <option>Yes</option>
 <option>No</option>
-</select><br>
+</select>
+
 <button onclick="submitRSVP()">Submit</button>
 </div>
 </div>
 
 <script>
-function nextScreen(id){
-document.querySelectorAll('.section').forEach(sec=>sec.style.display='none');
-document.getElementById(id).style.display='flex';
-}
 
-/* Google Maps */
-function openMap(){
-window.open("https://maps.google.com?q=Delhi Grand Palace");
+/* navigation */
+function next(n){
+document.querySelectorAll('.section').forEach(s=>{
+s.classList.remove('active');
+});
+document.getElementById('s'+n).classList.add('active');
 }
 
 /* RSVP */
 function submitRSVP(){
-alert("Thank you for your response!");
+document.body.innerHTML =
+"<div style='display:flex;justify-content:center;align-items:center;height:100vh;text-align:center;'><div><h1 style='color:gold;'>Thank You 💖</h1><p>We look forward to celebrating with you</p></div></div>";
 }
 
-/* Flower petals */
-function createFlower(){
-const flower=document.createElement('div');
-flower.classList.add('flower');
-flower.innerHTML="🌸";
-flower.style.left=Math.random()*100+"vw";
-flower.style.animationDuration=(Math.random()*3+2)+"s";
-document.body.appendChild(flower);
+/* sparkle particles */
+setInterval(()=>{
+const dot=document.createElement("div");
+dot.style.position="fixed";
+dot.style.width="3px";
+dot.style.height="3px";
+dot.style.background="gold";
+dot.style.borderRadius="50%";
+dot.style.left=Math.random()*100+"vw";
+dot.style.top="100vh";
+dot.style.opacity="0.6";
+dot.style.transition="5s linear";
 
-setTimeout(()=>flower.remove(),5000);
-}
+document.body.appendChild(dot);
 
-setInterval(createFlower,300);
+setTimeout(()=>dot.style.top="-10vh",100);
+setTimeout(()=>dot.remove(),5000);
+},800);
+
 </script>
 
 </body>
