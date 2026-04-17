@@ -3,219 +3,151 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wedding Invitation</title>
+<title>Wedding Invite</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Poppins&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins&display=swap" rel="stylesheet">
 
 <style>
 
-/* ===== BASE ===== */
 body{
 margin:0;
+overflow:hidden;
 font-family:'Poppins',sans-serif;
-color:white;
-overflow-x:hidden;
-
-/* premium background */
-background:
-radial-gradient(circle at 20% 30%, rgba(255,215,0,0.1), transparent 40%),
-radial-gradient(circle at 80% 70%, rgba(255,140,0,0.08), transparent 40%),
-linear-gradient(135deg,#0f0f0f,#2b0a0a);
+background:black;
 }
 
-/* moving glow */
-body::after{
-content:"";
+/* INTRO */
+#intro{
 position:fixed;
-width:100%;
-height:100%;
-background:
-radial-gradient(circle at 50% 50%, rgba(255,215,0,0.05), transparent 60%);
-animation:moveGlow 8s infinite alternate;
-pointer-events:none;
-}
-
-@keyframes moveGlow{
-0%{transform:translate(0,0);}
-100%{transform:translate(40px,-30px);}
-}
-
-/* ===== SECTIONS ===== */
-.section{
-display:none;
-min-height:100vh;
-padding:40px 20px;
-text-align:center;
-opacity:0;
-transform:translateY(20px);
-transition:all 0.6s ease;
-}
-
-.section.active{
+inset:0;
+background:black;
 display:flex;
 justify-content:center;
 align-items:center;
-flex-direction:column;
-opacity:1;
-transform:translateY(0);
+z-index:999;
 }
 
-/* ===== SPLIT ===== */
-.split{
+.glow-bg{
+position:absolute;
+width:400px;
+height:400px;
+background:radial-gradient(circle,rgba(255,215,0,0.2),transparent 70%);
+animation:pulse 3s infinite ease-in-out;
+}
+
+@keyframes pulse{
+0%,100{transform:scale(1);}
+50%{transform:scale(1.2);}
+}
+
+.intro-content{
+text-align:center;
+}
+
+.ganesha{
+font-size:80px;
+color:#ffd700;
+animation:fadeScale 2s forwards;
+}
+
+.mantra{
+color:#ffd700;
+margin-top:10px;
+animation:fadeUp 2s forwards 1s;
+}
+
+.intro-title{
+font-family:'Playfair Display',serif;
+font-size:40px;
+margin-top:15px;
+color:white;
+animation:fadeUp 2s forwards 1.5s;
+}
+
+@keyframes fadeScale{
+from{opacity:0; transform:scale(0.6);}
+to{opacity:1;}
+}
+
+@keyframes fadeUp{
+from{opacity:0; transform:translateY(20px);}
+to{opacity:1;}
+}
+
+/* SLIDER */
+.slider{
 display:flex;
+width:500vw;
 height:100vh;
-padding:0;
+transition:1s ease;
 }
 
-.left-img{
-flex:1;
-background:url("https://images.unsplash.com/photo-1519741497674-611481863552") center/cover no-repeat;
+.slide{
+width:100vw;
+height:100vh;
 position:relative;
-animation:zoomIn 1.5s ease;
+overflow:hidden;
 }
 
-@keyframes zoomIn{
-from{transform:scale(1.1);}
-to{transform:scale(1);}
-}
-
-.left-img::after{
-content:"";
+.bg{
 position:absolute;
 inset:0;
-background:rgba(0,0,0,0.35);
+background-size:cover;
+background-position:center;
+filter:brightness(0.7);
+animation:zoom 12s ease-in-out infinite alternate;
 }
 
-.right-content{
-flex:1;
-display:flex;
-justify-content:center;
-align-items:center;
-padding:20px;
+@keyframes zoom{
+from{transform:scale(1);}
+to{transform:scale(1.15);}
 }
 
-/* ===== CARD ===== */
-.card{
-background:rgba(255,255,255,0.05);
-padding:30px;
-border-radius:20px;
-backdrop-filter:blur(15px);
-border:1px solid rgba(255,215,0,0.3);
-box-shadow:0 15px 40px rgba(0,0,0,0.6);
-max-width:350px;
-width:100%;
-transition:0.4s;
+.overlay{
+position:absolute;
+inset:0;
+background:linear-gradient(to top,rgba(0,0,0,0.8),rgba(0,0,0,0.2));
 }
 
-.card:hover{
-transform:translateY(-5px);
+.content{
+position:absolute;
+bottom:15%;
+left:50%;
+transform:translateX(-50%);
+text-align:center;
+color:white;
+width:90%;
+max-width:400px;
 }
 
-/* divider */
-.divider{
-width:60px;
-height:3px;
-background:linear-gradient(to right,transparent,gold,transparent);
-margin:15px auto;
-}
-
-/* ===== TEXT ===== */
 h1{
 font-family:'Playfair Display',serif;
-font-size:clamp(30px,5vw,40px);
+font-size:40px;
 color:#ffd700;
 }
 
-.names{
-font-size:clamp(28px,5vw,38px);
-text-shadow:0 0 10px rgba(255,215,0,0.3);
-}
-
-h2{
-font-size:18px;
-opacity:0.85;
-}
-
-/* ===== BUTTON ===== */
 button{
+margin-top:20px;
 padding:10px 25px;
 border:none;
 border-radius:25px;
 background:#ffd700;
 color:black;
-cursor:pointer;
-margin-top:20px;
 font-weight:bold;
-position:relative;
-overflow:hidden;
+cursor:pointer;
 }
 
-/* ripple */
-button::after{
-content:"";
-position:absolute;
-width:0;
-height:0;
-background:rgba(255,255,255,0.4);
-border-radius:50%;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-transition:0.4s;
+.progress{
+position:fixed;
+top:0;
+left:0;
+height:4px;
+background:gold;
+width:0%;
 }
 
-button:active::after{
-width:200px;
-height:200px;
-}
-
-/* ===== GALLERY ===== */
-.gallery{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:10px;
-margin-top:15px;
-}
-
-.gallery img{
-width:100%;
-height:100px;
-object-fit:cover;
-border-radius:10px;
-transition:0.4s;
-}
-
-.gallery img:hover{
-transform:scale(1.1);
-}
-
-/* ===== INPUT ===== */
-input,select{
-padding:10px;
-margin:10px;
-border-radius:10px;
-border:none;
-width:80%;
-max-width:250px;
-}
-
-/* ===== RESPONSIVE ===== */
-@media(max-width:768px){
-.split{
-flex-direction:column;
-}
-
-.left-img{
-height:40vh;
-}
-
-.right-content{
-height:60vh;
-}
-
-.gallery{
-grid-template-columns:repeat(2,1fr);
-}
+@media(max-width:600px){
+h1{font-size:28px;}
 }
 
 </style>
@@ -223,115 +155,101 @@ grid-template-columns:repeat(2,1fr);
 
 <body>
 
-<!-- SCREEN 1 -->
-<div id="s1" class="section active">
-<div class="card">
-<h1>Wedding Invitation</h1>
-<div class="divider"></div>
-<p>You are invited to celebrate</p>
-<button onclick="next(2)">Open</button>
+<!-- INTRO -->
+<div id="intro">
+<div class="glow-bg"></div>
+<div class="intro-content">
+<div class="ganesha">ॐ</div>
+<p class="mantra">श्री गणेशाय नमः</p>
+<h1 class="intro-title">Wedding Invitation</h1>
 </div>
 </div>
 
-<!-- SCREEN 2 -->
-<div id="s2" class="section split">
+<div class="progress" id="progress"></div>
 
-<div class="left-img"></div>
+<div class="slider" id="slider">
 
-<div class="right-content">
-<div class="card">
-<h1 class="names">Anivaran ❤️ Priya</h1>
-<div class="divider"></div>
-<h2>20 December 2026</h2>
-<p>Grand Palace, Delhi</p>
-<button onclick="next(3)">Next</button>
+<!-- SLIDE 1 -->
+<div class="slide">
+<div class="bg" style="background-image:url('https://images.unsplash.com/photo-1600096194534-95cf5ece04cf')"></div>
+<div class="overlay"></div>
+<div class="content">
+<h1>Welcome</h1>
+<p>Join us in celebration</p>
 </div>
 </div>
 
-</div>
-
-<!-- SCREEN 3 -->
-<div id="s3" class="section">
-<div class="card">
-<h2>Functions</h2>
-<div class="divider"></div>
-<p>Haldi • 18 Dec</p>
-<p>Sangeet • 19 Dec</p>
-<p>Wedding • 20 Dec</p>
-<button onclick="next(4)">Next</button>
+<!-- SLIDE 2 -->
+<div class="slide">
+<div class="bg" style="background-image:url('https://images.unsplash.com/photo-1598275277521-1885382fda0c')"></div>
+<div class="overlay"></div>
+<div class="content">
+<h1>Kirti Sharma ❤️ Hrithik Sharma</h1>
+<p>20 December 2026</p>
 </div>
 </div>
 
-<!-- SCREEN 4 -->
-<div id="s4" class="section">
-<div class="card">
-<h2>Our Moments 💍</h2>
-<div class="divider"></div>
-
-<div class="gallery">
-<img src="https://images.unsplash.com/photo-1529634899881-1f7c6c3a3b7a">
-<img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9">
-<img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc">
-<img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c">
-<img src="https://images.unsplash.com/photo-1517841905240-472988babdf9">
-<img src="https://images.unsplash.com/photo-1519741497674-611481863552">
-</div>
-
-<button onclick="next(5)">Next</button>
+<!-- SLIDE 3 -->
+<div class="slide">
+<div class="bg" style="background-image:url('https://images.unsplash.com/photo-1583939003579-730e3918a45a')"></div>
+<div class="overlay"></div>
+<div class="content">
+<h1>Functions</h1>
+<p>Haldi • Mehndi • Sangeet</p>
 </div>
 </div>
 
-<!-- SCREEN 5 -->
-<div id="s5" class="section">
-<div class="card">
-<h2>RSVP</h2>
-<div class="divider"></div>
+<!-- SLIDE 4 -->
+<div class="slide">
+<div class="bg" style="background-image:url('https://images.unsplash.com/photo-1600172454132-1d6a5c8df1e8')"></div>
+<div class="overlay"></div>
+<div class="content">
+<h1>The Wedding</h1>
+<p>Celebrating Forever</p>
+</div>
+</div>
 
-<input placeholder="Your Name">
-<select>
+<!-- SLIDE 5 -->
+<div class="slide">
+<div class="bg" style="background-image:url('https://images.unsplash.com/photo-1529634899881-1f7c6c3a3b7a')"></div>
+<div class="overlay"></div>
+<div class="content">
+<h1>RSVP</h1>
+<input placeholder="Your Name" style="padding:10px;border-radius:10px;border:none;"><br>
+<select style="padding:10px;border-radius:10px;border:none;margin-top:10px;">
 <option>Will you attend?</option>
 <option>Yes</option>
 <option>No</option>
-</select>
-
+</select><br>
 <button onclick="submitRSVP()">Submit</button>
 </div>
 </div>
 
+</div>
+
 <script>
 
-/* navigation */
-function next(n){
-document.querySelectorAll('.section').forEach(s=>{
-s.classList.remove('active');
-});
-document.getElementById('s'+n).classList.add('active');
+/* intro */
+setTimeout(()=>{
+let intro=document.getElementById("intro");
+intro.style.opacity="0";
+intro.style.transition="1s";
+setTimeout(()=>intro.style.display="none",1000);
+},4000);
+
+/* slider */
+let i=0;
+setInterval(()=>{
+if(i<4){
+i++;
+document.getElementById("slider").style.transform="translateX(-"+i*100+"vw)";
 }
+},4000);
 
 /* RSVP */
 function submitRSVP(){
-document.body.innerHTML =
-"<div style='display:flex;justify-content:center;align-items:center;height:100vh;text-align:center;'><div><h1 style='color:gold;'>Thank You 💖</h1><p>We look forward to celebrating with you</p></div></div>";
+document.body.innerHTML="<div style='display:flex;justify-content:center;align-items:center;height:100vh;background:black;color:white;'><h1 style='color:gold;'>Thank You 💖</h1></div>";
 }
-
-/* sparkle particles */
-setInterval(()=>{
-const dot=document.createElement("div");
-dot.style.position="fixed";
-dot.style.width="3px";
-dot.style.height="3px";
-dot.style.background="gold";
-dot.style.borderRadius="50%";
-dot.style.left=Math.random()*100+"vw";
-dot.style.top="100vh";
-dot.style.opacity="0.6";
-dot.style.transition="5s linear";
-
-document.body.appendChild(dot);
-
-setTimeout(()=>dot.style.top="-10vh",100);
-setTimeout(()=>dot.remove(),5000);
-},800);
 
 </script>
 
