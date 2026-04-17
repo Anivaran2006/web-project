@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Invitation</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins&display=swap" rel="stylesheet">
+
+<style>
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+background: linear-gradient(to bottom,#5a0f1b,#8b1e2d);
+color:white;
+overflow-x:hidden;
+}
+
+/* Sections */
+.section{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+}
+
+/* Hide all except first */
+.section:not(#screen1){
+display:none;
+}
+
+/* Button */
+button{
+padding:12px 25px;
+border:none;
+background:gold;
+color:#5a0f1b;
+font-weight:bold;
+border-radius:30px;
+cursor:pointer;
+margin-top:20px;
+}
+
+/* Headings */
+h1{
+font-family:'Great Vibes',cursive;
+font-size:50px;
+margin:10px 0;
+}
+
+h2{
+font-size:30px;
+margin-bottom:10px;
+}
+
+.card{
+background:rgba(255,255,255,0.1);
+padding:20px;
+border-radius:20px;
+backdrop-filter:blur(10px);
+}
+
+/* RSVP */
+input, select{
+padding:10px;
+margin:10px;
+border-radius:10px;
+border:none;
+}
+
+/* Flower animation */
+.flower{
+position:fixed;
+top:-10px;
+font-size:20px;
+animation:fall linear infinite;
+}
+
+@keyframes fall{
+0%{transform:translateY(-10px);}
+100%{transform:translateY(100vh);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- Screen 1 -->
+<div id="screen1" class="section">
+<h1>Wedding Invitation</h1>
+<p>You are invited to celebrate</p>
+<button onclick="nextScreen('screen2')">Open Invitation</button>
+</div>
+
+<!-- Screen 2 -->
+<div id="screen2" class="section">
+<div class="card">
+<h1>Anivaran ❤️ Priya</h1>
+<h2>Wedding Ceremony</h2>
+<p>📅 20 December 2026</p>
+<p>⏰ 7:00 PM onwards</p>
+<p>📍 Grand Palace, Delhi</p>
+
+<button onclick="openMap()">View Location</button>
+<br>
+<button onclick="nextScreen('screen3')">Next</button>
+</div>
+</div>
+
+<!-- Screen 3 -->
+<div id="screen3" class="section">
+<div class="card">
+<h2>Functions & Ceremonies</h2>
+<p>💛 Haldi - 18 Dec</p>
+<p>🎉 Sangeet - 19 Dec</p>
+<p>🔥 Wedding - 20 Dec</p>
+<p>🍽 Reception - 21 Dec</p>
+
+<button onclick="nextScreen('screen4')">Next</button>
+</div>
+</div>
+
+<!-- Screen 4 -->
+<div id="screen4" class="section">
+<div class="card">
+<h2>RSVP</h2>
+<input type="text" placeholder="Your Name"><br>
+<select>
+<option>Will you attend?</option>
+<option>Yes</option>
+<option>No</option>
+</select><br>
+<button onclick="submitRSVP()">Submit</button>
+</div>
+</div>
+
+<script>
+function nextScreen(id){
+document.querySelectorAll('.section').forEach(sec=>sec.style.display='none');
+document.getElementById(id).style.display='flex';
+}
+
+/* Google Maps */
+function openMap(){
+window.open("https://maps.google.com?q=Delhi Grand Palace");
+}
+
+/* RSVP */
+function submitRSVP(){
+alert("Thank you for your response!");
+}
+
+/* Flower petals */
+function createFlower(){
+const flower=document.createElement('div');
+flower.classList.add('flower');
+flower.innerHTML="🌸";
+flower.style.left=Math.random()*100+"vw";
+flower.style.animationDuration=(Math.random()*3+2)+"s";
+document.body.appendChild(flower);
+
+setTimeout(()=>flower.remove(),5000);
+}
+
+setInterval(createFlower,300);
+</script>
+
+</body>
+</html>
